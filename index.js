@@ -95,20 +95,39 @@ function listCourses(auth) {
     );
 }
 
-// const Discord = require("discord.js");
-// const cron = require("node-cron");
-// const config = require("./config.json");
-// const fs = require('fs');
+function sendAnnouncements(auth) {
+    const classroom = google.classroom({ version: "v1", auth });
 
-// const client = new Discord.Client();
+    classroom.courses.list({}, (err, res) => {
+        if (err) return console.error("The API returned an error: " + err);
+        const courses = res.data.courses;
+        courses.forEach((c) => {
+            const announcements = classroom.courses.announcements.list({courseId: c.id});
+            console.log(announcements);
+        });
+    });
+}
 
-// client.on("ready", () => {
-// console.log("Disord Bot Connected");
+const Discord = require("discord.js");
+const cron = require("node-cron");
+const config = require("./config.json");
+const client = new Discord.Client();
+
+client.on("ready", () => {
+    console.log("Disord Bot Connected");
+    fs.readFile("credentials.json", (err, content) => {
+        if (err) return console.log("Error loading client secret file:", err);
+        // Authorize a client with credentials, then call the Google Classroom API.
+        authorize(JSON.parse(content), sendAnnouncements);
+        // announcements.forEach((a) => {
+        // client.channels.cache.get("860961718620389436").send(a.text);
+        // });
+    });
+});
+
+// const LAST_POST = fs.readFile("./last_post.txt");
+// cron.schedule("* * * * *", () => {
+// client.channels.cache.get("860553990751780866").send("");
 // });
 
-// const LAST_POST = fs.readFile('./last_post.txt');
-// cron.schedule('* * * * *', () => {
-// client.channels.cache.get('860553990751780866').send('');
-// });
-
-// client.login(config.BOT_TOKEN);
+client.login(config.BOT_TOKEN);
