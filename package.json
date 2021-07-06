@@ -1,0 +1,22 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "test bot for discord.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeremy Nevado",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/pubsub": "^2.15.1",
+    "discord.js": "^12.5.3",
+    "googleapis": "^39.2.0",
+    "node-cron": "^3.0.0",
+    "nodemon": "^2.0.9"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-plugin-react": "^7.24.0"
+  }
+}

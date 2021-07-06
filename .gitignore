@@ -1,0 +1,11 @@
+# Vim swap files
+*.swp
+*.swo
+.cache*
+*~
+
+token.json
+credentials.json
+config.json
+
+node_modules
